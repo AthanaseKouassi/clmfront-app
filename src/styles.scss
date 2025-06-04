@@ -1,1 +1,67 @@
 /* You can add global styles to this file, and also import other style files */
+// src/styles.scss
+
+// Variables de couleur
+$primary-color: #87CEEB; // Bleu clair
+$secondary-color: #F0E68C; // Jaune clair
+$white-color: #FFFFFF; // Blanc
+
+// Configuration globale de Bootstrap
+$theme-colors: (
+  primary: $primary-color,
+  secondary: $secondary-color,
+  white: $white-color
+);
+
+// Configuration globale de Material Design
+@mixin mat-core() {
+  $primary: $primary-color;
+  $accent: $secondary-color;
+}
+@include mat-core();
+
+// Styles globaux
+body {
+  font-family: 'Arial', sans-serif;
+  background-color: $white-color;
+  color: $primary-color; // Remplace $black-color par $primary-color
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+.logo {
+  width: 50px;
+  height: 50px;
+  background-color: $secondary-color;
+  border: 2px solid $primary-color; // Remplace $black-color par $primary-color
+  border-radius: 50%;
+}
+
+.navbar {
+  ul {
+    list-style: none;
+    padding: 0;
+
+    li {
+      display: inline-block;
+      margin-right: 10px;
+
+      a {
+        text-decoration: none;
+        color: $primary-color; // Remplace $black-color par $primary-color
+
+        &:hover {
+          color: $secondary-color;
+        }
+      }
+    }
+  }
+}
+
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
