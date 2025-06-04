@@ -1,0 +1,34 @@
+.user-info {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  font-size: 0.9rem;
+  margin-left: 2rem;
+  margin-top: 0.8rem;
+
+  .user-display {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 4px 12px;
+    border-radius: 20px;
+    background: rgba(63, 81, 181, 0.1);
+
+    .user-icon {
+      color: #3f51b5;
+      font-size: 1.2rem;
+      width: auto;
+      height: auto;
+    }
+
+    .username {
+      font-weight: 500;
+      color: #333;
+    }
+    .datetime {
+      color: #666;
+      font-weight: 370;
+      margin-top: 0.1rem;
+    }
+  }
+}
