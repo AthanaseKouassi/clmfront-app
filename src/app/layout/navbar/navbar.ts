@@ -1,10 +1,10 @@
-import {Component, Input, OnDestroy, OnInit, QueryList, ViewChildren} from '@angular/core';
+import {Component, Input, OnDestroy, QueryList, ViewChildren} from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {MatToolbarModule} from '@angular/material/toolbar';
 import {MatButton, MatIconButton} from '@angular/material/button';
 import {MatIcon} from '@angular/material/icon';
 import {RouterLink, RouterLinkActive} from '@angular/router';
-import {MatMenu, MatMenuItem, MatMenuPanel, MatMenuTrigger} from '@angular/material/menu';
+import {MatMenu, MatMenuItem, MatMenuTrigger} from '@angular/material/menu';
 
 
 export interface MenuItem {
@@ -17,14 +17,15 @@ export interface MenuItem {
 
 @Component({
   selector: 'app-navbar',
-  imports: [CommonModule, MatToolbarModule, MatIcon, MatIconButton, MatButton, RouterLink, RouterLinkActive, MatMenuTrigger, MatMenu, MatMenuItem],
+  imports: [CommonModule, MatToolbarModule, MatIcon, MatIconButton,
+    MatButton, RouterLink, RouterLinkActive, MatMenuTrigger, MatMenu, MatMenuItem],
   standalone: true,
   templateUrl: './navbar.html',
   styleUrl: './navbar.scss'
 })
 export class Navbar implements OnDestroy {
   sidenav: any;
-
+  menuRefs: any[] = [];
   @Input() menuItems: MenuItem[] = [ ];
   @Input() appName: string = 'Communauté';
   @Input() currentUser: string = 'Invité';

@@ -1,9 +1,8 @@
 /* You can add global styles to this file, and also import other style files */
-// src/styles.scss
 
 // Variables de couleur
 $primary-color: #87CEEB; // Bleu clair
-$secondary-color: #F0E68C; // Jaune clair
+$secondary-color: #767a41; // Jaune clair
 $white-color: #FFFFFF; // Blanc
 
 // Configuration globale de Bootstrap
@@ -60,6 +59,15 @@ body {
       }
     }
   }
+}
+
+.clm-color-button {
+  background-color: $secondary-color;
+  color: black; // Contraste recommandé
+}
+
+.clm-color-icon {
+  color: $secondary-color;
 }
 
 html, body { height: 100%; }

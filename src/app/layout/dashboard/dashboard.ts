@@ -1,17 +1,16 @@
-import {Component, inject, OnInit} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {CommonModule} from '@angular/common';
-import {Router, RouterModule} from '@angular/router';
+import {RouterModule} from '@angular/router';
 
 @Component({
   selector: 'app-dashboard',
-  imports: [CommonModule,RouterModule],
+  imports: [CommonModule, RouterModule],
   standalone: true,
   templateUrl: './dashboard.html',
   styleUrl: './dashboard.scss'
 })
 export class Dashboard implements OnInit{
 
-  private route = inject(Router)
   appName!: string;
 
   ngOnInit(): void {

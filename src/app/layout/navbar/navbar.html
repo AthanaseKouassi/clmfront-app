@@ -1,66 +1,56 @@
-
 <mat-toolbar color="primary" class="d-flex justify-content-between">
-  <!-- Section gauche : menu + titre + navigation -->
+
+  <!-- Section gauche -->
   <div class="d-flex align-items-center">
-    <button mat-icon-button (click)="sidenav.toggle()">
+    <button mat-icon-button (click)="sidenav?.toggle()">
       <mat-icon>menu</mat-icon>
     </button>
+    <span class="m-sm-1">{{appName}}</span>
 
-    <span class="m-sm-1">{{ appName }}</span>
-
-    <!-- Navigation -->
-    <ng-container *ngFor="let menu of menuItems; let i = index">
-      <!-- Menu sans enfants -->
-      <ng-container *ngIf="!menu.children">
+    @for (menu of menuItems; track menu.label; let i = $index) {
+      @if (!menu.children) {
         <a
           mat-button
           [routerLink]="menu.path"
           routerLinkActive="active"
           [routerLinkActiveOptions]="{ exact: true }"
         >
-          <mat-icon *ngIf="menu.icon">{{ menu.icon }}</mat-icon>
+          @if (menu.icon) {
+            <mat-icon class="clm-color-icon">{{ menu.icon }}</mat-icon>
+          }
           <span class="nav-label">{{ menu.label }}</span>
         </a>
-      </ng-container>
-
-      <!-- Menu avec enfants (dropdown) -->
-      <ng-container *ngIf="menu.children">
-        <div class="dropdown-container">
-          <button mat-button [matMenuTriggerFor]="menuRefList[i]">
-            <mat-icon *ngIf="menu.icon">{{ menu.icon }}</mat-icon>
+      } @else {
+          <button mat-button [matMenuTriggerFor]="belowMenu">
+            @if (menu.icon) {
+              <mat-icon>{{ menu.icon }}</mat-icon>
+            }
             <span class="nav-label">{{ menu.label }}</span>
           </button>
 
-          <!-- Menu déroulant -->
-          <mat-menu #menuRef="matMenu">
-            <ng-container *ngFor="let child of menu.children">
-              <a
-                mat-menu-item
-                [routerLink]="child.path"
-                routerLinkActive="active"
-                [routerLinkActiveOptions]="{ exact: true }"
-              >
+          <mat-menu #belowMenu="matMenu" xPosition="after" yPosition="below">
+            @for (child of menu.children; track child.label) {
+              <button mat-menu-item [routerLink]="child.path"
+                      routerLinkActive="active"
+                      [routerLinkActiveOptions]="{ exact: true }">
+                @if (child.icon) {
+                  <mat-icon>{{ child.icon }}</mat-icon>
+                }
                 {{ child.label }}
-              </a>
-            </ng-container>
+              </button>
+            }
           </mat-menu>
-
-          <!-- Collecte les menus dans un tableau -->
-          <ng-template #menuTemplate>
-            <mat-menu #menuRef="matMenu"></mat-menu>
-          </ng-template>
-        </div>
-      </ng-container>
-    </ng-container>
+      }
+    }
   </div>
 
-  <!-- Section droite : utilisateur -->
-  <div *ngIf="showUserInfo" class="user-info d-flex align-items-center">
+  <!-- Section droite -->
+  <div class="user-info d-flex align-items-center">
     <div class="user-display vertical-icon">
       <mat-icon class="user-icon">account_circle</mat-icon>
-      <span class="username"> {{ currentUser }}</span>
+      <span class="username">{{ currentUser }}</span>
     </div>
     <span class="datetime">{{ currentDateTime | date:'d MMMM y, HH:mm:ss' }}</span>
   </div>
-</mat-toolbar>
 
+</mat-toolbar>

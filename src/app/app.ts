@@ -1,34 +1,40 @@
 import { Component } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import {MenuItem, Navbar} from './layout/navbar/navbar';
-import {DASH} from '@angular/cdk/keycodes';
-import {Dashboard} from './layout/dashboard/dashboard';
 import {CommonModule} from '@angular/common';
-import {MatIcon} from '@angular/material/icon';
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet, Navbar, CommonModule, MatIcon],
+  imports: [RouterOutlet, Navbar, CommonModule],
   standalone: true,
   templateUrl: './app.html',
   styleUrl: './app.scss'
 })
 export class App {
-  protected title = 'clmfront-app';
 
   menuItem: MenuItem[] = [
-    {label: 'Accueil', path: '/dashboard', icon: 'dashboard'},
-    { label: 'Inscription', path: '', icon: '',
+    {label: 'Accueil', path: '/dashboard', icon: 'home'},
+    {label: 'Inscription', path: '', icon: 'app_registration',
     children:[
-      {label: 'Créer nouveau membre', path: '', icon: ''}
+      {label: 'Créer membre', path: '', icon: 'person_add'}
     ]},
-    {label: 'Activités', path: '', icon: '',
+    {label: 'Activités', path: '', icon: 'volunteer_activism',
     children: [
-      {label: 'Créer un groupe', path: '', icon: ''},
-      {label: 'Créer une Responsabilité', path: '', icon: ''}
+      {label: 'Créer un groupe', path: '', icon: 'groups'},
+      {label: 'Créer une Responsabilité', path: '', icon: 'attribution'},
+      {label: 'Les Champs missionnaires', path: '', icon: 'diversity_3'}
+    ]},
+    {label: 'Finances', path: '', icon: 'account_balance',
+    children:[
+      {label: 'Depot', path: '', icon: 'money_bag'},
+      {label: 'Depenses', path: '', icon: 'send_money'}
     ]},
 
-    { label: 'Profile', path: '', icon: '' }
+    { label: 'Paramètres', path: '', icon: 'settings' ,
+    children: [
+      {label: 'Créer un utilisateur', path: '', icon: 'person_add'},
+    ]
+    }
   ];
 
   username: string = 'Athanase KOUASSI';
