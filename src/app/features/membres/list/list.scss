@@ -1,0 +1,12 @@
+h3 {
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+.clickable-row {
+  cursor: pointer;
+
+  &:hover {
+    background-color: #f0f0f0;
+  }
+}

@@ -2,10 +2,11 @@ import {inject, Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {Member} from '../models/members';
 
+
 @Injectable({
   providedIn: 'root'
 })
-export class Service {
+export class MemberService {
 
   private http = inject(HttpClient);
 
@@ -13,8 +14,6 @@ export class Service {
     return this.http.get<Member[]>('/api/members');
   }
 
-  create(){
 
-  }
 
 }

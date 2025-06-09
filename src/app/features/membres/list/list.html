@@ -1,4 +1,16 @@
 <div class="container mt-2 ms-4">
-  <p>list works!</p>
+  <h3>Test DataTable</h3>
+  <app-data-table
+    [dataSource]="paginatedDataSource"
+    [columns]="columns"
+    [pageSize]="pageSize"
+    [pageSizeOptions]="pageSizeOptions"
+    [totalItems]="totalItems"
+    (pageChange)="onPageChange($event)"
+    (rowClick)="onRowClick($event)"
+    (edit)="onEdit($event)"
+    (delete)="onDelete($event)"
+  ></app-data-table>
+
 </div>
 
