@@ -8,21 +8,32 @@ import {ColumnConfig} from '../ui/data-table/data-table';
 export class FormatCellPipe implements PipeTransform {
 
   transform(value: any, column: ColumnConfig): string {
-    if (!value)
-      return '';
+    if (!value) return '';
 
     switch (column.type) {
-      case 'date':
-        return new Date(value).toLocaleDateString();
+      case 'date': {
+        const date =
+          value instanceof Date
+            ? value
+            : typeof value === 'string'
+              ? new Date(value)
+              : null;
+
+        return date && !isNaN(date.getTime())
+          ? date.toLocaleDateString('fr-FR')
+          : 'Date invalide';
+      }
+
       case 'boolean':
         return value ? 'Oui' : 'Non';
+
       case 'number':
         return column.format
           ? new Intl.NumberFormat('fr-FR', JSON.parse(column.format)).format(value)
           : value.toString();
+
       default:
         return value.toString();
     }
   }
-
 }
