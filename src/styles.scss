@@ -26,10 +26,11 @@ body {
   color: $primary-color; // Remplace $black-color par $primary-color
 }
 
-.container {
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 20px;
+.main-content {
+  padding: 1rem 2rem;
+  min-height: calc(100vh - 64px); // pour occuper toute la hauteur moins la navbar
+  background-color: #f9f9f9;
+  box-sizing: border-box;
 }
 
 .logo {
@@ -60,6 +61,43 @@ body {
     }
   }
 }
+mat-toolbar {
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); // ✅ Séparation visuelle nette
+  padding: 1px 2rem;
+  height: 80px;
+  display: flex;
+
+}
+
+.dashboard-card {
+  width: 100%;
+  margin: 0 auto;
+  padding: 2rem;
+  background-color: #fafafa;
+  border-radius: 1rem;
+}
+
+.search-container {
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.search-field {
+  flex-grow: 1;
+  min-width: 50px;
+}
+
+.search-button {
+  white-space: nowrap;
+  min-width: 150px;
+}
+
+
 
 .clm-color-button {
   background-color: $secondary-color;
@@ -69,7 +107,14 @@ body {
 .clm-color-icon {
   color: $secondary-color;
 }
+@media (max-width: 768px) {
+  mat-toolbar {
+    padding: 0 1rem;
+    height: 64px;
+  }
+}
 
 html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
 

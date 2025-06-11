@@ -1,5 +1,5 @@
-import { Component } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
+import {Component} from '@angular/core';
+import {RouterOutlet} from '@angular/router';
 import {MenuItem, Navbar} from './layout/navbar/navbar';
 import {CommonModule} from '@angular/common';
 
@@ -13,10 +13,10 @@ import {CommonModule} from '@angular/common';
 export class App {
 
   menuItem: MenuItem[] = [
-    {label: 'Accueil', path: '/dashboard', icon: 'home'},
+    {label: 'Accueil', path: '', icon: 'home'},
     {label: 'Inscription', path: '', icon: 'app_registration',
     children:[
-      {label: 'Créer membre', path: '', icon: 'person_add'}
+      {label: 'Créer membre', path: '/membres', icon: 'person_add'}
     ]},
     {label: 'Activités', path: '', icon: 'volunteer_activism',
     children: [

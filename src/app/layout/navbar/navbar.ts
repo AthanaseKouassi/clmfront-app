@@ -1,10 +1,11 @@
-import {Component, Input, OnDestroy, QueryList, ViewChildren} from '@angular/core';
+import {Component, inject, Input, OnDestroy, OnInit, QueryList, ViewChildren} from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {MatToolbarModule} from '@angular/material/toolbar';
 import {MatButton, MatIconButton} from '@angular/material/button';
 import {MatIcon} from '@angular/material/icon';
-import {RouterLink, RouterLinkActive} from '@angular/router';
+import {NavigationEnd, Router, RouterLink, RouterLinkActive} from '@angular/router';
 import {MatMenu, MatMenuItem, MatMenuTrigger} from '@angular/material/menu';
+import {filter} from 'rxjs';
 
 
 export interface MenuItem {
@@ -23,9 +24,9 @@ export interface MenuItem {
   templateUrl: './navbar.html',
   styleUrl: './navbar.scss'
 })
-export class Navbar implements OnDestroy {
+export class Navbar implements OnDestroy, OnInit {
+  private router = inject(Router);
   sidenav: any;
-  menuRefs: any[] = [];
   @Input() menuItems: MenuItem[] = [ ];
   @Input() appName: string = 'Communauté';
   @Input() currentUser: string = 'Invité';
@@ -38,6 +39,8 @@ export class Navbar implements OnDestroy {
   currentDateTime: Date = new Date();
   private readonly timer: any;
   menuRefList: MatMenu[] = [];
+
+  isContentPage: boolean = false;
 
   @ViewChildren(MatMenu) set collectMenus(menus: QueryList<MatMenu>) {
     this.menuRefList = menus.toArray();
@@ -58,6 +61,15 @@ export class Navbar implements OnDestroy {
 
   private updateDateTime(): void {
     this.currentDateTime = new Date();
+  }
+
+  ngOnInit(): void {
+    this.router.events.pipe(
+      filter(event => event instanceof NavigationEnd)
+    ).subscribe((event: NavigationEnd) => {
+      // Vérifiez si la route actuelle est une page de contenu
+      this.isContentPage = this.router.url.includes('/content'); // Ajustez la condition selon vos routes
+    });
   }
 
 
