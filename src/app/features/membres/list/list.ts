@@ -1,6 +1,12 @@
-import {Component} from '@angular/core';
+import {ChangeDetectionStrategy, Component, OnInit} from '@angular/core';
 import {ColumnConfig, DataTable} from '../../../shared/ui/data-table/data-table';
 import {PageEvent} from '@angular/material/paginator';
+import {MatCard, MatCardContent, MatCardHeader, MatCardTitle} from '@angular/material/card';
+import {MatIcon} from '@angular/material/icon';
+import {MatFormField, MatInput, MatLabel, MatSuffix} from '@angular/material/input';
+import {MatButton, MatIconButton} from '@angular/material/button';
+
+import {FormBuilder, FormGroup, ReactiveFormsModule} from '@angular/forms';
 
 
 interface TestItem {
@@ -15,12 +21,26 @@ interface TestItem {
   selector: 'app-list',
   standalone:true,
   imports: [
-    DataTable
+    DataTable,
+    MatCard,
+    MatIcon,
+    MatCardTitle,
+    MatCardContent,
+    MatFormField,
+    MatLabel,
+    MatInput,
+    MatButton,
+    ReactiveFormsModule,
+    MatIconButton,
+    MatSuffix,
+    MatCardHeader
   ],
   templateUrl: './list.html',
-  styleUrl: './list.scss'
+  styleUrl: './list.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class List {
+export class List implements OnInit{
+  protected readonly searchForm: FormGroup ;
 
   // Données fictives
   dataSource: TestItem[] = [
@@ -41,6 +61,13 @@ export class List {
   totalItems = this.dataSource.length;
 
 
+  constructor(private fb: FormBuilder) {
+    this.searchForm = this.fb.group({ searchQuery: [''] });
+  }
+
+  ngOnInit(): void {
+
+  }
 
   // Configuration des colonnes
   columns: ColumnConfig[] = [
@@ -91,4 +118,20 @@ export class List {
     }
   }
 
+  onSearch(): void {
+    const searchTerm = this.searchForm.get('query')?.value;
+    console.log('Recherche via bouton :', searchTerm);
+    this.applySearch(searchTerm);
+  }
+
+
+  applySearch(searchTerm: string): void {
+    // 🔍 Applique ici ton filtre ou appel API
+    // Exemple : this.filteredData = this.fullData.filter(item => item.name.includes(searchTerm));
+  }
+
+
+  onAddMember() {
+
+  }
 }

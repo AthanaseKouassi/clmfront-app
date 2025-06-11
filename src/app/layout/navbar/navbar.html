@@ -1,56 +1,186 @@
-<mat-toolbar color="primary" class="d-flex justify-content-between">
+<!--<mat-toolbar color="primary" class="d-flex justify-content-between">-->
+
+<!--  &lt;!&ndash; Section gauche &ndash;&gt;-->
+<!--  <div class="d-flex align-items-center">-->
+<!--    <button mat-icon-button (click)="sidenav?.toggle()">-->
+<!--      <mat-icon>menu</mat-icon>-->
+<!--    </button>-->
+<!--    <span class="m-sm-1">{{appName}}</span>-->
+
+<!--    @for (menu of menuItems; track menu.label; let i = $index) {-->
+<!--      @if (!menu.children) {-->
+<!--        <a-->
+<!--          mat-button-->
+<!--          [routerLink]="menu.path"-->
+<!--          routerLinkActive="active"-->
+<!--          [routerLinkActiveOptions]="{ exact: true }"-->
+<!--        >-->
+<!--          @if (menu.icon) {-->
+<!--            <mat-icon class="clm-color-icon">{{ menu.icon }}</mat-icon>-->
+<!--          }-->
+<!--          <span class="nav-label">{{ menu.label }}</span>-->
+<!--        </a>-->
+<!--      } @else {-->
+<!--          <button mat-button [matMenuTriggerFor]="belowMenu">-->
+<!--            @if (menu.icon) {-->
+<!--              <mat-icon>{{ menu.icon }}</mat-icon>-->
+<!--            }-->
+<!--            <span class="nav-label">{{ menu.label }}</span>-->
+<!--          </button>-->
+
+<!--          <mat-menu #belowMenu="matMenu" xPosition="after" yPosition="below">-->
+<!--            @for (child of menu.children; track child.label) {-->
+<!--              <button mat-menu-item [routerLink]="child.path"-->
+<!--                      routerLinkActive="active"-->
+<!--                      [routerLinkActiveOptions]="{ exact: true }">-->
+<!--                @if (child.icon) {-->
+<!--                  <mat-icon>{{ child.icon }}</mat-icon>-->
+<!--                }-->
+<!--                {{ child.label }}-->
+<!--              </button>-->
+<!--            }-->
+<!--          </mat-menu>-->
+<!--      }-->
+<!--    }-->
+<!--  </div>-->
+
+<!--  &lt;!&ndash; Section droite &ndash;&gt;-->
+<!--  <div class="user-info d-flex align-items-center">-->
+<!--    <div class="user-display vertical-icon">-->
+<!--      <mat-icon class="user-icon">account_circle</mat-icon>-->
+<!--      <span class="username">{{ currentUser }}</span>-->
+<!--    </div>-->
+<!--    <span class="datetime">{{ currentDateTime | date:'d MMMM y, HH:mm:ss' }}</span>-->
+<!--  </div>-->
+
+<!--</mat-toolbar>-->
+
+<!--@if (!isContentPage) {-->
+
+
+<!--<mat-toolbar color="primary" class="d-flex justify-content-between">-->
+
+<!--  &lt;!&ndash; Section gauche &ndash;&gt;-->
+<!--  <div class="d-flex align-items-center">-->
+<!--    <button mat-icon-button (click)="sidenav?.toggle()">-->
+<!--      <mat-icon>menu</mat-icon>-->
+<!--    </button>-->
+<!--    <span class="m-sm-1">{{ appName }}</span>-->
+
+<!--    @for (menu of menuItems; track menu.label; let i = $index) {-->
+<!--      @if (!menu.children) {-->
+<!--        <a-->
+<!--          mat-button-->
+<!--          [routerLink]="menu.path"-->
+<!--          routerLinkActive="active"-->
+<!--          [routerLinkActiveOptions]="{ exact: true }"-->
+<!--        >-->
+<!--          @if (menu.icon) {-->
+<!--            <mat-icon class="clm-color-icon">{{ menu.icon }}</mat-icon>-->
+<!--          }-->
+<!--          <span class="nav-label">{{ menu.label }}</span>-->
+<!--        </a>-->
+<!--      } @else {-->
+<!--        <button mat-button [matMenuTriggerFor]="belowMenu">-->
+<!--          @if (menu.icon) {-->
+<!--            <mat-icon>{{ menu.icon }}</mat-icon>-->
+<!--          }-->
+<!--          <span class="nav-label">{{ menu.label }}</span>-->
+<!--        </button>-->
+
+<!--        <mat-menu #belowMenu="matMenu" xPosition="after" yPosition="below">-->
+<!--          @for (child of menu.children; track child.label) {-->
+<!--            <button mat-menu-item [routerLink]="child.path"-->
+<!--                    routerLinkActive="active"-->
+<!--                    [routerLinkActiveOptions]="{ exact: true }">-->
+<!--              @if (child.icon) {-->
+<!--                <mat-icon>{{ child.icon }}</mat-icon>-->
+<!--              }-->
+<!--              {{ child.label }}-->
+<!--            </button>-->
+<!--          }-->
+<!--        </mat-menu>-->
+<!--      }-->
+<!--    }-->
+<!--  </div>-->
+
+<!--  &lt;!&ndash; Section droite &ndash;&gt;-->
+<!--  <div class="user-info d-flex align-items-center">-->
+<!--    <div class="user-display vertical-icon">-->
+<!--      <mat-icon class="user-icon">account_circle</mat-icon>-->
+<!--      <span class="username">{{ currentUser }}</span>-->
+<!--    </div>-->
+<!--    <span class="datetime">{{ currentDateTime | date:'d MMMM y, HH:mm:ss' }}</span>-->
+<!--  </div>-->
+
+<!--</mat-toolbar>-->
+
+<!--}-->
+<!--position-fixed top-0 start-0 end-0 z-3 shadow-sm flex-wrap-->
+<mat-toolbar color="primary" class="d-flex justify-content-between shadow-lg flex-wrap">
+
+<!--    <mat-icon color="warn" aria-hidden="true">warning</mat-icon>-->
+<!--    <span>EJeeeee</span>-->
+
 
   <!-- Section gauche -->
-  <div class="d-flex align-items-center">
-    <button mat-icon-button (click)="sidenav?.toggle()">
+  <div class="d-flex align-items-center gap-2 flex-wrap">
+    <button mat-icon-button class="d-md-block" (click)="sidenav?.toggle()">
       <mat-icon>menu</mat-icon>
     </button>
-    <span class="m-sm-1">{{appName}}</span>
 
-    @for (menu of menuItems; track menu.label; let i = $index) {
+    <span class="fw-normal">{{ appName }}</span>
+
+    @for (menu of menuItems; track menu.label) {
       @if (!menu.children) {
         <a
           mat-button
+          class="text-decoration-none"
           [routerLink]="menu.path"
           routerLinkActive="active"
           [routerLinkActiveOptions]="{ exact: true }"
         >
           @if (menu.icon) {
-            <mat-icon class="clm-color-icon">{{ menu.icon }}</mat-icon>
+            <mat-icon class="me-1">{{ menu.icon }}</mat-icon>
           }
           <span class="nav-label">{{ menu.label }}</span>
         </a>
       } @else {
-          <button mat-button [matMenuTriggerFor]="belowMenu">
-            @if (menu.icon) {
-              <mat-icon>{{ menu.icon }}</mat-icon>
-            }
-            <span class="nav-label">{{ menu.label }}</span>
-          </button>
+        <button mat-button [matMenuTriggerFor]="belowMenu">
+          @if (menu.icon) {
+            <mat-icon class="me-1">{{ menu.icon }}</mat-icon>
+          }
+          {{ menu.label }}
+        </button>
 
-          <mat-menu #belowMenu="matMenu" xPosition="after" yPosition="below">
-            @for (child of menu.children; track child.label) {
-              <button mat-menu-item [routerLink]="child.path"
-                      routerLinkActive="active"
-                      [routerLinkActiveOptions]="{ exact: true }">
-                @if (child.icon) {
-                  <mat-icon>{{ child.icon }}</mat-icon>
-                }
-                {{ child.label }}
-              </button>
-            }
-          </mat-menu>
-      }
+        <mat-menu #belowMenu="matMenu" xPosition="after" yPosition="below">
+          @for (child of menu.children; track child.label) {
+            <button mat-menu-item [routerLink]="child.path" routerLinkActive="active">
+              @if (child.icon) {
+                <mat-icon class="me-1">{{ child.icon }}</mat-icon>
+              }
+              {{ child.label }}
+            </button>
+          }
+        </mat-menu>
+
+    }
     }
   </div>
 
   <!-- Section droite -->
-  <div class="user-info d-flex align-items-center">
-    <div class="user-display vertical-icon">
-      <mat-icon class="user-icon">account_circle</mat-icon>
-      <span class="username">{{ currentUser }}</span>
+  @if (showUserInfo) {
+    <div class="user-info d-flex align-items-center">
+      <div class="user-display vertical-icon">
+        <mat-icon class="user-icon">account_circle</mat-icon>
+        <span>{{ currentUser }}</span>
+      </div>
+      <span class="d-md-inline">{{ currentDateTime | date: 'd MMMM y, HH:mm:ss' }}</span>
     </div>
-    <span class="datetime">{{ currentDateTime | date:'d MMMM y, HH:mm:ss' }}</span>
-  </div>
+  }
 
+<!--  align-items-center gap-1-->
 </mat-toolbar>
+
+<!-- Espacement sous la navbar -->
+<div class="toolbar-spacer"></div>

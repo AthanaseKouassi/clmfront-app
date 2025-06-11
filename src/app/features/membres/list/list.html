@@ -1,16 +1,46 @@
-<div class="container mt-2 ms-4">
-  <h3>Test DataTable</h3>
-  <app-data-table
-    [dataSource]="paginatedDataSource"
-    [columns]="columns"
-    [pageSize]="pageSize"
-    [pageSizeOptions]="pageSizeOptions"
-    [totalItems]="totalItems"
-    (pageChange)="onPageChange($event)"
-    (rowClick)="onRowClick($event)"
-    (edit)="onEdit($event)"
-    (delete)="onDelete($event)"
-  ></app-data-table>
+<mat-card class="dashboard-card mat-elevation-z2">
+  <mat-card-title style="margin-bottom: 1rem">Gestion des membres</mat-card-title>
+  <mat-card-content class="table-card mat-elevation-z3 ">
+    <form [formGroup]="searchForm">
+      <div class="toolbar-actions">
+        <button mat-raised-button color="primary" (click)="onAddMember()">
+          <mat-icon>person_add</mat-icon>
+          Créer un membre
+        </button>
 
-</div>
+        <mat-form-field appearance="outline" class="w-full max-w-md search-field">
+          <mat-label>Rechercher</mat-label>
+          <input
+            matInput
+            type="text"
+            placeholder="Rechercher..."
+            formControlName="searchQuery"
+            (keyup.enter)="onSearch()"
+          />
+          <button
+            mat-icon-button
+            matSuffix
+            aria-label="Rechercher"
+            (click)="onSearch()"
+          >
+            <mat-icon>search</mat-icon>
+          </button>
+        </mat-form-field>
+      </div>
+    </form>
+
+    <app-data-table
+      [dataSource]="paginatedDataSource"
+      [columns]="columns"
+      [pageSize]="pageSize"
+      [pageSizeOptions]="pageSizeOptions"
+      [totalItems]="totalItems"
+      (pageChange)="onPageChange($event)"
+      (rowClick)="onRowClick($event)"
+      (edit)="onEdit($event)"
+      (delete)="onDelete($event)">
+    </app-data-table>
+  </mat-card-content>
+
+</mat-card>
 

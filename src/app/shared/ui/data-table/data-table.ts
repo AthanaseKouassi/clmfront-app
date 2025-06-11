@@ -16,6 +16,7 @@ import {
 import {MatIconButton} from '@angular/material/button';
 import {MatIcon} from '@angular/material/icon';
 import {FormatCellPipe} from '../../utils/format-cell-pipe';
+import {MatTooltip} from '@angular/material/tooltip';
 
 export interface ColumnConfig{
   key: string;
@@ -43,6 +44,7 @@ export interface ColumnConfig{
     MatRowDef,
     MatPaginator,
     FormatCellPipe,
+    MatTooltip,
   ],
   templateUrl: './data-table.html',
   styleUrl: './data-table.scss'

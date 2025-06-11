@@ -1,34 +1,36 @@
-<div class="mat-elevation-z8">
-  <table mat-table [dataSource]="dataSource" matSort>
+
+<div class="mat-elevation-z8 table-wrapper">
+  <table mat-table [dataSource]="dataSource" matSort class="mat-table-custom">
+
     <!-- Colonnes dynamiques -->
     @for (column of columns; track column.key) {
       <ng-container [matColumnDef]="column.key">
-        <th mat-header-cell *matHeaderCellDef>
-          {{column.header}}
+        <th mat-header-cell *matHeaderCellDef class="header-cell">
+          {{ column.header }}
         </th>
-        <td mat-cell *matCellDef="let element">
-          {{element[column.key] | formatCell:column}}
+        <td mat-cell *matCellDef="let element" class="body-cell">
+          {{ element[column.key] | formatCell: column }}
         </td>
       </ng-container>
     }
 
     <!-- Colonne actions -->
     <ng-container matColumnDef="actions">
-      <th mat-header-cell *matHeaderCellDef>Actions</th>
-      <td mat-cell *matCellDef="let row">
-        <button mat-icon-button (click)="edit.emit(row)">
+      <th mat-header-cell *matHeaderCellDef class="header-cell center">Actions</th>
+      <td mat-cell *matCellDef="let row" class="body-cell center">
+        <button mat-icon-button style="color: darkblue"  (click)="edit.emit(row)" matTooltip="Modifier">
           <mat-icon>edit</mat-icon>
         </button>
-        <button mat-icon-button color="warn" (click)="delete.emit(row)">
+        <button mat-icon-button style="color:darkred" (click)="delete.emit(row)" matTooltip="Supprimer">
           <mat-icon>delete</mat-icon>
         </button>
       </td>
     </ng-container>
 
-    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-header-row *matHeaderRowDef="displayedColumns" class="mat-header-row-custom"></tr>
     <tr
       mat-row
-      *matRowDef="let row; columns: displayedColumns;"
+      *matRowDef="let row; columns: displayedColumns"
       (click)="rowClick.emit(row)"
       class="clickable-row"
     ></tr>
@@ -42,3 +44,6 @@
     showFirstLastButtons
   ></mat-paginator>
 </div>
+
+
+
