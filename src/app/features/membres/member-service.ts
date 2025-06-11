@@ -14,7 +14,7 @@ export class MemberService {
   private readonly http = inject(HttpClient);
   private readonly apiUrl = environment.apiUrl;
 
-  getMemberByPage(page: number, size: number, ): Observable<Page<Member>> {
+  getMemberByPage(page: number, size: number ): Observable<Page<Member>> {
     let params = new HttpParams()
       .set('page', page)
       .set('size', size);
@@ -29,6 +29,13 @@ export class MemberService {
     return this.http.post<Member>(`${this.apiUrl}/members/create`, member);
   }
 
+  getMemberSearch(query: string, page: number, size: number ):Observable<Page<Member>> {
+    let params = new HttpParams()
+      .set('query',query)
+      .set('page', page)
+      .set('size', size);
+    return this.http.get<Page<Member>>(`${this.apiUrl}/members/search`,{params});
+  }
 
 
 }
