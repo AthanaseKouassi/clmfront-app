@@ -114,16 +114,31 @@ export class List implements OnInit{
   }
 
   onSearch(): void {
-    const searchTerm = this.searchForm.get('query')?.value;
+    const searchTerm = this.searchForm.get('searchQuery')?.value;
     console.log('Recherche via bouton :', searchTerm);
-    this.applySearch(searchTerm);
+    if(searchTerm){
+      this.applySearch(searchTerm.trim(), this.pageIndex, this.pageSize);
+    } else {
+      this.loadMembers(this.pageIndex, this.pageSize);
+    }
   }
 
 
-  applySearch(searchTerm: string): void {
-    // 🔍 Applique ici ton filtre ou appel API
-    // Exemple : this.filteredData = this.fullData.filter(item => item.name.includes(searchTerm));
+  applySearch(searchTerm: string, page: number, size: number): void {
 
+    this.memberService.getMemberSearch(searchTerm,page,size).subscribe({
+      next: (Data: Page<Member>) => {
+        this.members = Data.content.map(m=>({
+          ...m,
+          entryDate:  m.entryDate ? new Date(m.entryDate) : null,
+          baptismDate:  m.baptismDate ? new Date(m.baptismDate) : null,
+          birthDate: m.birthDate ? new Date(m.birthDate): null,
+        }));
+        this.totalItems = Data.totalElements;
+        this.pageIndex = Data.number;
+      },
+      error: (err) => console.error('Error searching members :', err)
+    });
   }
 
 
