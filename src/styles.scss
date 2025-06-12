@@ -97,7 +97,15 @@ mat-toolbar {
   min-width: 150px;
 }
 
-
+.right-sidebar .mat-dialog-container {
+  position: fixed;
+  top: 0;
+  right: 0;
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  border-radius: 0;
+}
 
 .clm-color-button {
   background-color: $secondary-color;

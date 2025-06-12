@@ -1,4 +1,4 @@
-import {Component, inject, OnInit} from '@angular/core';
+import {Component, inject, model, OnInit, signal} from '@angular/core';
 import {ColumnConfig, DataTable} from '../../../shared/ui/data-table/data-table';
 import {PageEvent} from '@angular/material/paginator';
 import {MatCard, MatCardContent, MatCardTitle} from '@angular/material/card';
@@ -10,6 +10,8 @@ import {FormBuilder, FormGroup, ReactiveFormsModule} from '@angular/forms';
 import {Member} from '../../models/members';
 import {MemberService} from '../member-service';
 import {Page} from '../../models/page';
+import {MatDialog} from '@angular/material/dialog';
+import {CreateMember} from '../create-member/create-member';
 
 
 @Component({
@@ -33,7 +35,10 @@ import {Page} from '../../models/page';
   styleUrl: './list.scss'
 })
 export class List implements OnInit{
+  readonly animal = signal('');
+  readonly name = model('');
   private memberService = inject(MemberService);
+  readonly dialog = inject(MatDialog);
   protected readonly searchForm: FormGroup ;
 
   members: Member[] = [];
@@ -141,8 +146,20 @@ export class List implements OnInit{
     });
   }
 
+  openDialog(): void {
+    const dialogRef = this.dialog.open(CreateMember, {
+      maxWidth: '750vw',
+      maxHeight: '180vh',
+      panelClass: 'custom-dialog-container',
+      data: { titre: 'Créer un nouveau membre' }
+    });
 
-  onAddMember() {
-
+    dialogRef.afterClosed().subscribe((result: Member | undefined) => {
+      if (result) {
+        console.log('Membre créé:', result);
+        // Envoie au back ou ajoute à la liste
+      }
+    });
   }
+
 }

@@ -24,8 +24,8 @@ export interface Member {
 }
 
 export enum Gender {
-  MALE = 'HOMME',
-  FEMALE = 'FEMME',
+  MALE = 'Homme',
+  FEMALE = 'Femme',
 }
 
 export enum MaritalStatus {
