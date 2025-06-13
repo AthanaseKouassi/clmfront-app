@@ -1,0 +1,143 @@
+<mat-dialog-content class="mat-typography">
+  <mat-card-header><h5>{{ data.titre || 'Créer un membre' }}</h5></mat-card-header>
+
+  <form [formGroup]="form" class="form-grid">
+    <div class="card-wrapper">
+      <mat-card class="form-card">
+        <mat-form-field appearance="outline">
+          <mat-label>Nom</mat-label>
+          <input matInput formControlName="lastName" required>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>Prénom</mat-label>
+          <input matInput formControlName="firstName" required>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>Email</mat-label>
+          <input matInput formControlName="email" type="email">
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>Date de naissance</mat-label>
+          <input matInput [matDatepicker]="birthPicker" formControlName="birthDate">
+          <mat-datepicker-toggle matIconSuffix [for]="birthPicker"></mat-datepicker-toggle>
+          <mat-datepicker #birthPicker></mat-datepicker>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>Genre</mat-label>
+          <mat-select formControlName="gender">
+            @for (gender of genderOptions; track gender[0]) {
+              <mat-option [value]="gender[0]">
+                {{ gender[1] }}
+              </mat-option>
+            }
+          </mat-select>
+        </mat-form-field>
+      </mat-card>
+
+      <mat-card class="form-card">
+        <mat-form-field appearance="outline">
+          <mat-label>Lieu d'habitation</mat-label>
+          <input matInput formControlName="address">
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>Téléphone</mat-label>
+          <input matInput formControlName="phone">
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>N°CNI</mat-label>
+          <input matInput formControlName="idNumber">
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>Date de baptême</mat-label>
+          <input matInput [matDatepicker]="baptismPicker" formControlName="baptismDate">
+          <mat-datepicker-toggle matIconSuffix [for]="baptismPicker"></mat-datepicker-toggle>
+          <mat-datepicker #baptismPicker></mat-datepicker>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>Officiant baptême</mat-label>
+          <input matInput formControlName="baptismOfficiant">
+        </mat-form-field>
+
+      </mat-card>
+
+      <mat-card class="form-card">
+        <mat-form-field appearance="outline">
+          <mat-label>Date d'arrivée à CLM</mat-label>
+          <input matInput [matDatepicker]="entryDatePicker" formControlName="entryDate">
+          <mat-datepicker-toggle matIconSuffix [for]="entryDatePicker"></mat-datepicker-toggle>
+          <mat-datepicker #entryDatePicker></mat-datepicker>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>Statut matrimonial</mat-label>
+          <input matInput formControlName="maritalStatus">
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>Date de mariage</mat-label>
+          <input matInput [matDatepicker]="weddingDatePicker" formControlName="weddingDate">
+          <mat-datepicker-toggle matIconSuffix [for]="weddingDatePicker"></mat-datepicker-toggle>
+          <mat-datepicker #weddingDatePicker></mat-datepicker>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>Officiant du mariage</mat-label>
+          <input matInput formControlName="weddingOfficiant">
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>Nombre d'enfant</mat-label>
+          <input matInput formControlName="childNumber">
+        </mat-form-field>
+      </mat-card>
+
+      <mat-card class="form-card">
+
+        <mat-form-field appearance="outline">
+          <mat-label>Eglise d'origine</mat-label>
+          <input matInput formControlName="originChurch">
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>Profession</mat-label>
+          <input matInput formControlName="profession">
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>Responsabilité</mat-label>
+          <input matInput formControlName="idResponsability">
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>Groupe</mat-label>
+          <input matInput formControlName="idGroup">
+        </mat-form-field>
+
+        <mat-checkbox formControlName="consentToSharePersonalInfo">
+          Partager mes infos personnelles
+        </mat-checkbox>
+
+        <mat-checkbox formControlName="consentToUseImageInVisuals">
+          Utilisation de mes images
+        </mat-checkbox>
+      </mat-card>
+
+    </div>
+  </form>
+</mat-dialog-content>
+
+<mat-dialog-actions align="end">
+  <button mat-button (click)="close()">Fermer</button>
+  <button mat-raised-button color="primary" (click)="save()" [disabled]="form.invalid">
+    Enregistrer
+  </button>
+</mat-dialog-actions>
+
