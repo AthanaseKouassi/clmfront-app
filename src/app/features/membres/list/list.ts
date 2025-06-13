@@ -62,10 +62,8 @@ export class List implements OnInit{
     { key: 'birthDate', header: 'Date de naissance', type: 'date',format: 'dd/MM/yyyy' },
     { key: 'email', header: 'Email', type: 'text' },
     { key: 'phone', header: 'Téléphone', type: 'text' },
-    { key: 'baptismDate', header: 'Date de baptême', type: 'date',format: 'dd/MM/yyyy' },
     { key: 'address', header: 'Lieu habitation' , type: 'text' },
-    { key: 'profession', header: 'Profession' , type: 'text' },
-    { key: 'entryDate', header: 'Date entrée' , type: 'date',format: 'dd/MM/yyyy' }
+    { key: 'profession', header: 'Profession' , type: 'text' }
   ];
 
   loadMembers(page: number, size: number): void {
