@@ -1,4 +1,4 @@
-import {Component, inject, model, OnInit, signal} from '@angular/core';
+import {Component, inject, model, OnInit} from '@angular/core';
 import {ColumnConfig, DataTable} from '../../../shared/ui/data-table/data-table';
 import {PageEvent} from '@angular/material/paginator';
 import {MatCard, MatCardContent, MatCardTitle} from '@angular/material/card';
@@ -12,6 +12,7 @@ import {MemberService} from '../member-service';
 import {Page} from '../../models/page';
 import {MatDialog} from '@angular/material/dialog';
 import {CreateMember} from '../create-member/create-member';
+import {MatSnackBar} from '@angular/material/snack-bar';
 
 
 @Component({
@@ -35,7 +36,6 @@ import {CreateMember} from '../create-member/create-member';
   styleUrl: './list.scss'
 })
 export class List implements OnInit{
-  readonly animal = signal('');
   readonly name = model('');
   private memberService = inject(MemberService);
   readonly dialog = inject(MatDialog);
@@ -48,7 +48,8 @@ export class List implements OnInit{
   pageSizeOptions = [5, 10, 15];
 
 
-  constructor(private fb: FormBuilder) {
+  constructor(private fb: FormBuilder,
+              private readonly snackBar: MatSnackBar,) {
     this.searchForm = this.fb.group({ searchQuery: [''] });
   }
 
@@ -62,10 +63,8 @@ export class List implements OnInit{
     { key: 'birthDate', header: 'Date de naissance', type: 'date',format: 'dd/MM/yyyy' },
     { key: 'email', header: 'Email', type: 'text' },
     { key: 'phone', header: 'Téléphone', type: 'text' },
-    { key: 'baptismDate', header: 'Date de baptême', type: 'date',format: 'dd/MM/yyyy' },
     { key: 'address', header: 'Lieu habitation' , type: 'text' },
-    { key: 'profession', header: 'Profession' , type: 'text' },
-    { key: 'entryDate', header: 'Date entrée' , type: 'date',format: 'dd/MM/yyyy' }
+    { key: 'profession', header: 'Profession' , type: 'text' }
   ];
 
   loadMembers(page: number, size: number): void {
@@ -157,7 +156,22 @@ export class List implements OnInit{
     dialogRef.afterClosed().subscribe((result: Member | undefined) => {
       if (result) {
         console.log('Membre créé:', result);
-        // Envoie au back ou ajoute à la liste
+        this.memberService.createMember(result).subscribe({
+          next: (createdMember) => {
+            console.log('Membre sauvegardé:', createdMember);
+            // Mise à jour de la liste locale
+            this.members.push(createdMember);
+
+            this.snackBar.open('Membre créé avec succès !', 'Fermer', {
+              duration: 3000,
+            });
+          },
+          error: (err) => {
+            console.error('Erreur lors de la création du membre', err);
+            this.snackBar.open('Échec de la création du membre', undefined, { duration: 4000 });
+          },
+        });
+
       }
     });
   }

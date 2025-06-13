@@ -60,6 +60,7 @@ export class DataTable<T> {
   @Output() rowClick = new EventEmitter<T>();
   @Output() edit = new EventEmitter<T>();
   @Output() delete = new EventEmitter<T>();
+  @Output() detail = new EventEmitter<T>();
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
