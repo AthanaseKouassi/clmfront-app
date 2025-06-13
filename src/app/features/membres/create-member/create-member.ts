@@ -1,8 +1,8 @@
 import {ChangeDetectionStrategy, Component, Inject} from '@angular/core';
-import {MatButton} from '@angular/material/button';
+import {MatButton, MatButtonModule} from '@angular/material/button';
 import {MAT_DIALOG_DATA, MatDialogModule, MatDialogRef} from '@angular/material/dialog';
 import {CommonModule} from '@angular/common';
-import {MatFormField, MatInput, MatLabel} from '@angular/material/input';
+import {MatFormField, MatInput, MatInputModule, MatLabel} from '@angular/material/input';
 import {Gender, Member} from '../../models/members';
 import {FormBuilder, FormGroup, ReactiveFormsModule, Validators} from '@angular/forms';
 import {MatCheckbox} from '@angular/material/checkbox';
@@ -22,21 +22,23 @@ import {MatSelect} from '@angular/material/select';
   selector: 'app-create-member',
   imports: [
     CommonModule,
-    MatButton,
+    ReactiveFormsModule,
     MatDialogModule,
     MatDatepickerModule,
     MatNativeDateModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatButtonModule,
     MatLabel,
     MatFormField,
     MatInput,
-    ReactiveFormsModule,
+    MatButton,
     MatCheckbox,
     MatDatepickerInput,
     MatDatepickerToggle,
     MatDatepicker,
     MatCardHeader,
     MatCard,
-    MatFormFieldModule,
     MatSelect,
     MatOption
   ],
@@ -50,9 +52,9 @@ export class CreateMember {
   genderOptions = Object.entries(Gender);
 
   constructor(
-    private fb: FormBuilder,
-    private dialogRef: MatDialogRef<CreateMember>,
-    @Inject(MAT_DIALOG_DATA) public data: { titre: string }
+              private fb: FormBuilder,
+              private dialogRef: MatDialogRef<CreateMember>,
+              @Inject(MAT_DIALOG_DATA) public data: { titre: string }
   ) {
     this.form = this.fb.group({
       lastName: ['', Validators.required],
@@ -81,12 +83,15 @@ export class CreateMember {
 
   save() {
     if (this.form.valid) {
+      console.log('[DEBUG] Méthode save() appelée')
       const member: Member = this.form.value;
-      this.dialogRef.close(member);
+      this.dialogRef.close(member);  // envoie les données au parent via la fermeture du dialog
     }
   }
+
 
   close() {
     this.dialogRef.close();
   }
+
 }
