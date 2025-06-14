@@ -1,11 +1,14 @@
 import {Component, inject, OnInit} from '@angular/core';
-import {MatCard, MatCardContent, MatCardHeader, MatCardTitle} from '@angular/material/card';
+import {MatCard, MatCardActions, MatCardContent, MatCardHeader, MatCardTitle} from '@angular/material/card';
 import {MatCheckbox} from '@angular/material/checkbox';
 import {MatFormField, MatInput, MatLabel} from '@angular/material/input';
 import {ReactiveFormsModule} from '@angular/forms';
 import {Member} from '../../models/members';
 import {DatePipe} from '@angular/common';
 import {MemberService} from '../member-service';
+import {MatButton, MatIconButton} from '@angular/material/button';
+import {MatIcon} from '@angular/material/icon';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-details',
@@ -20,7 +23,11 @@ import {MemberService} from '../member-service';
     MatCardTitle,
     MatCard,
     DatePipe,
-    MatCardHeader
+    MatCardHeader,
+    MatCardActions,
+    MatButton,
+    MatIcon,
+    MatIconButton
   ],
   standalone:true,
   templateUrl: './details.html',
@@ -29,7 +36,7 @@ import {MemberService} from '../member-service';
 export class Details implements OnInit{
 
   private readonly membreService = inject(MemberService);
-
+  private readonly route = inject(Router);
   member: Member = {
     id: 0,
     lastName: '',
@@ -58,7 +65,13 @@ export class Details implements OnInit{
   ngOnInit(): void {
   }
 
+ getDetail(){
 
+ }
 
+ exitDetail(){
+    console.log('Quitter la page détail...')
+    this.route.navigate(['/membres']);
+ }
 
 }
