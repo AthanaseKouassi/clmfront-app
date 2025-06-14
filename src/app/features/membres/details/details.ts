@@ -1,24 +1,16 @@
-import {Component, inject, OnInit} from '@angular/core';
+import {ChangeDetectionStrategy, Component, inject, OnInit} from '@angular/core';
 import {MatCard, MatCardActions, MatCardContent, MatCardHeader, MatCardTitle} from '@angular/material/card';
-import {MatCheckbox} from '@angular/material/checkbox';
-import {MatFormField, MatInput, MatLabel} from '@angular/material/input';
-import {ReactiveFormsModule} from '@angular/forms';
 import {Member} from '../../models/members';
-import {DatePipe} from '@angular/common';
+import {AsyncPipe, DatePipe} from '@angular/common';
 import {MemberService} from '../member-service';
-import {MatButton, MatIconButton} from '@angular/material/button';
+import {MatButton} from '@angular/material/button';
 import {MatIcon} from '@angular/material/icon';
-import {Router} from '@angular/router';
+import {ActivatedRoute, Router} from '@angular/router';
+import {catchError, EMPTY, Observable, tap} from 'rxjs';
 
 @Component({
   selector: 'app-details',
   imports: [
-    MatFormField,
-    MatInput,
-    MatLabel,
-    MatFormField,
-    MatCheckbox,
-    ReactiveFormsModule,
     MatCardContent,
     MatCardTitle,
     MatCard,
@@ -27,51 +19,49 @@ import {Router} from '@angular/router';
     MatCardActions,
     MatButton,
     MatIcon,
-    MatIconButton
+    AsyncPipe
   ],
   standalone:true,
   templateUrl: './details.html',
-  styleUrl: './details.scss'
+  styleUrl: './details.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class Details implements OnInit{
 
-  private readonly membreService = inject(MemberService);
-  private readonly route = inject(Router);
-  member: Member = {
-    id: 0,
-    lastName: '',
-    firstName: '',
-    email: '',
-    birthDate: null,
-    gender: '',
-    address: '',
-    phone: '',
-    idNumber: '',
-    baptismDate: null,
-    baptismOfficiant: '',
-    entryDate: null,
-    maritalStatus: '',
-    weddingDate: null,
-    weddingOfficiant: '',
-    childNumber: 0,
-    originChurch: '',
-    profession: '',
-    idResponsability: null,
-    idGroup: null,
-    consentToSharePersonalInfo: false,
-    consentToUseImageInVisuals: false
-  };
+  private readonly memberService = inject(MemberService);
+  private readonly route = inject(ActivatedRoute);
+  private readonly router = inject(Router);
+  member$?: Observable<Member>;
+  error = false;
+
 
   ngOnInit(): void {
+    this.getDetailMember();
   }
 
- getDetail(){
+  getDetailMember(): void {
+    const idParam = this.route.snapshot.paramMap.get('id');
+    const memberId = Number(idParam); // équivalent à +idParam
 
- }
+    if (!idParam || isNaN(memberId)) {
+      this.exitDetail();
+      return;
+    }
 
- exitDetail(){
+    this.member$ = this.memberService.getMemberById(memberId).pipe(
+      tap(member => console.log('Le membre :...', member)),
+      catchError(error => {
+        console.error('Erreur de chargement du membre', error);
+        this.error = true;
+        return EMPTY; // évite une erreur de souscription
+      })
+    );
+  }
+
+
+  exitDetail(){
     console.log('Quitter la page détail...')
-    this.route.navigate(['/membres']);
+    this.router.navigate(['/membres']);
  }
 
 }
