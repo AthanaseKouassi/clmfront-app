@@ -36,7 +36,7 @@
       [pageSizeOptions]="pageSizeOptions"
       [totalItems]="totalItems"
       (pageChange)="onPageChange($event)"
-      (rowClick)="onRowClick($event)"
+      (detail)="onDetailClick($event)"
       (edit)="onEdit($event)"
       (delete)="onDelete($event)">
     </app-data-table>

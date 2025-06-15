@@ -13,6 +13,7 @@ import {Page} from '../../models/page';
 import {MatDialog} from '@angular/material/dialog';
 import {CreateMember} from '../create-member/create-member';
 import {MatSnackBar} from '@angular/material/snack-bar';
+import {Router} from '@angular/router';
 
 
 @Component({
@@ -39,6 +40,7 @@ export class List implements OnInit{
   readonly name = model('');
   private memberService = inject(MemberService);
   readonly dialog = inject(MatDialog);
+  private router = inject(Router);
   protected readonly searchForm: FormGroup ;
 
   members: Member[] = [];
@@ -92,20 +94,20 @@ export class List implements OnInit{
 
   }
 
-  onRowClick(row: Member): void {
-    console.log('Row clicked:', row);
+  onDetailClick(membre: Member): void {
+    console.log('Membre clicked:', membre);
     // Ex. navigation vers une page de détails
-    // this.router.navigate(['/members', row.id]);
+    this.router.navigate(['/membres/details', membre.id]);
   }
 
-  onEdit(row: Member): void {
-    console.log('Edit clicked:', row);
+  onEdit(membre: Member): void {
+    console.log('Edit clicked:', membre);
     // Naviguer vers le formulaire d'édition
     // this.router.navigate(['/members/edit', row.id]);
   }
 
-  onDelete(row: Member): void {
-    const confirmed = confirm(`Voulez-vous vraiment supprimer ${row.lastName+' '+row.firstName} ?`);
+  onDelete(membre: Member): void {
+    const confirmed = confirm(`Voulez-vous vraiment supprimer ${membre.lastName+' '+membre.firstName} ?`);
     if (confirmed) {
       // Ici tu peux appeler ton service de suppression
       // this.memberService.delete(row.id).subscribe(() => {
@@ -113,9 +115,15 @@ export class List implements OnInit{
       //   this.totalItems = this.dataSource.length;
       // });
 
-      console.log('Deleted:', row);
+      console.log('Deleted:', membre);
     }
   }
+
+  // onRowClick(membre: Member): void {
+  //   console.log('Membre clicked:', membre);
+  //   // Ex. navigation vers une page de détails
+  //   // this.router.navigate(['/members', row.id]);
+  // }
 
   onSearch(): void {
     const searchTerm = this.searchForm.get('searchQuery')?.value;
