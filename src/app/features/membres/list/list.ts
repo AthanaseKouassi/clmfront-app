@@ -1,12 +1,12 @@
-import {Component, inject, OnInit} from '@angular/core';
+import {Component, inject, OnInit, ViewChild} from '@angular/core';
 import {ColumnConfig, DataTable} from '../../../shared/ui/data-table/data-table';
-import {PageEvent} from '@angular/material/paginator';
+import {MatPaginator, PageEvent} from '@angular/material/paginator';
 import {MatCard, MatCardContent, MatCardTitle} from '@angular/material/card';
 import {MatIcon} from '@angular/material/icon';
 import {MatFormField, MatInput, MatLabel, MatSuffix} from '@angular/material/input';
 import {MatButton, MatIconButton} from '@angular/material/button';
 
-import {FormBuilder, FormGroup, ReactiveFormsModule} from '@angular/forms';
+import {FormBuilder, FormControl, FormGroup, ReactiveFormsModule} from '@angular/forms';
 import {Member} from '../../models/members';
 import {MemberService} from '../member-service';
 import {Page} from '../../models/page';
@@ -37,17 +37,19 @@ import {Router} from '@angular/router';
   styleUrl: './list.scss'
 })
 export class List implements OnInit{
-  // readonly name = model('');
   private memberService = inject(MemberService);
   readonly dialog = inject(MatDialog);
   private router = inject(Router);
-  protected readonly searchForm: FormGroup ;
+  protected searchForm: FormGroup ;
 
+
+  sQuery='';
   members: Member[] = [];
   totalItems = 0;
   pageIndex = 0;
   pageSize = 5;
   pageSizeOptions = [5, 10, 15];
+  @ViewChild(MatPaginator) paginator!: MatPaginator;
 
 
   constructor(private fb: FormBuilder,
@@ -56,6 +58,10 @@ export class List implements OnInit{
   }
 
   ngOnInit(): void {
+      this.searchForm = new FormGroup({
+        searchQuery: new FormControl('', { nonNullable: true }),
+      });
+
   this.loadMembers(this.pageIndex, this.pageSize);
   }
 
@@ -80,17 +86,23 @@ export class List implements OnInit{
         }));
         this.totalItems = pageData.totalElements;
         this.pageIndex = pageData.number;
-        console.log('Les MEMBRES... ',this.members);
+        console.log('Les membres ... ',this.members);
       },
       error: (err) => console.error('Erreur chargement des membres :', err)
     });
   }
 
-
   // Gestion des événements
   onPageChange(event: PageEvent): void {
     console.log('Page changed:', event);
-    this.loadMembers(event.pageIndex, event.pageSize);
+    this.pageIndex = event.pageIndex;
+    this.pageSize = event.pageSize;
+
+    if (this.sQuery && this.sQuery.trim() !== '') {
+      this.applySearch(this.sQuery, this.pageIndex, this.pageSize);
+    } else {
+      this.loadMembers(this.pageIndex, this.pageSize);
+    }
 
   }
 
@@ -142,20 +154,27 @@ export class List implements OnInit{
     }
   }
 
-  // onRowClick(membre: Member): void {
-  //   console.log('Membre clicked:', membre);
-  //   // Ex. navigation vers une page de détails
-  //   // this.router.navigate(['/members', row.id]);
-  // }
-
   onSearch(): void {
-    const searchTerm = this.searchForm.get('searchQuery')?.value;
-    console.log('Recherche via bouton :', searchTerm);
-    if(searchTerm){
-      this.applySearch(searchTerm.trim(), this.pageIndex, this.pageSize);
+    this.sQuery = this.searchForm.get('searchQuery')?.value?.trim() || '';
+    console.log('Search elements :', this.sQuery);
+    // Réinitialiser la pagination dans tous les cas
+    this.resetPagination();
+    if (this.hasValidSearchQuery()) {
+      this.applySearch(this.sQuery, this.pageIndex, this.pageSize);
     } else {
       this.loadMembers(this.pageIndex, this.pageSize);
     }
+  }
+
+  private resetPagination(): void {
+    this.pageIndex = 0;
+    if (this.paginator) {
+      this.paginator.firstPage();
+    }
+  }
+
+  private hasValidSearchQuery(): boolean {
+    return !!this.sQuery && this.sQuery.trim() !== '';
   }
 
 

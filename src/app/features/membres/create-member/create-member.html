@@ -78,7 +78,13 @@
 
         <mat-form-field appearance="outline">
           <mat-label>Statut matrimonial</mat-label>
-          <input matInput formControlName="maritalStatus">
+          <mat-select formControlName="maritalStatus">
+            @for (statusMarital of marriedStatus; track statusMarital[0]) {
+              <mat-option [value]="statusMarital[0]">
+                {{ statusMarital[1] }}
+              </mat-option>
+            }
+          </mat-select>
         </mat-form-field>
 
         <mat-form-field appearance="outline">

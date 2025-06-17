@@ -55,6 +55,7 @@ export class DataTable<T> {
   @Input() pageSize = 10;
   @Input() pageSizeOptions = [5,10,15,25];
   @Input() totalItems = 0;
+  @Input() pageIndex = 0;
 
   @Output() pageChange = new EventEmitter<PageEvent>();
   @Output() rowClick = new EventEmitter<T>();
