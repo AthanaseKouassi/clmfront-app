@@ -30,9 +30,9 @@ export enum Gender {
 }
 
 export enum MaritalStatus {
-  SINGLE = 'CÉLIBATAIRE',
-  MARRIED = 'MARIÉ(E)',
-  DIVORCED = 'DIVORCÉ(E)',
-  WIDOWED = 'VEUF / VEUVE',
+  SINGLE = 'Célibataire',
+  MARRIED = 'Marié(e)',
+  DIVORCED = 'Divorcé(e)',
+  WIDOWED = 'Veuf/Veuve',
 }
 
