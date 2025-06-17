@@ -1,4 +1,4 @@
-import {Component, inject, model, OnInit} from '@angular/core';
+import {Component, inject, OnInit} from '@angular/core';
 import {ColumnConfig, DataTable} from '../../../shared/ui/data-table/data-table';
 import {PageEvent} from '@angular/material/paginator';
 import {MatCard, MatCardContent, MatCardTitle} from '@angular/material/card';
@@ -37,7 +37,7 @@ import {Router} from '@angular/router';
   styleUrl: './list.scss'
 })
 export class List implements OnInit{
-  readonly name = model('');
+  // readonly name = model('');
   private memberService = inject(MemberService);
   readonly dialog = inject(MatDialog);
   private router = inject(Router);
@@ -63,9 +63,9 @@ export class List implements OnInit{
     { key: 'lastName', header: 'Nom', type: 'text' },
     { key: 'firstName', header: 'Prénom(s)', type: 'text' },
     { key: 'birthDate', header: 'Date de naissance', type: 'date',format: 'dd/MM/yyyy' },
-    { key: 'email', header: 'Email', type: 'text' },
+    { key: 'maritalStatus', header: 'Statut matrimonial' , type: 'text' },
+    { key: 'baptismDate', header: 'Date de baptême', type: 'date',format: 'dd/MM/yyyy' },
     { key: 'phone', header: 'Téléphone', type: 'text' },
-    { key: 'address', header: 'Lieu habitation' , type: 'text' },
     { key: 'profession', header: 'Profession' , type: 'text' }
   ];
 
@@ -96,14 +96,37 @@ export class List implements OnInit{
 
   onDetailClick(membre: Member): void {
     console.log('Membre clicked:', membre);
-    // Ex. navigation vers une page de détails
     this.router.navigate(['/membres/details', membre.id]);
   }
 
   onEdit(membre: Member): void {
     console.log('Edit clicked:', membre);
-    // Naviguer vers le formulaire d'édition
-    // this.router.navigate(['/members/edit', row.id]);
+    const dialogRef = this.dialog.open(CreateMember, {
+      maxWidth: '750vw',
+      maxHeight: '180vh',
+      panelClass: 'custom-dialog-container',
+      data: { titre: 'Editer Membre' , membre }
+    });
+
+    dialogRef.afterClosed().subscribe((result: Member | undefined) => {
+      if (result) {
+        this.memberService.createMember(result).subscribe({
+          next: (updated) => {
+            console.log('Membre mis à jour :::',updated)
+            this.snackBar.open('Membre mis à jour avec succès !', 'Fermer', {
+              duration: 3000,
+            });
+            this.loadMembers(this.pageIndex, this.pageSize);
+          },
+          error: (err) => {
+            console.error('Erreur lors de la mise à jour du membre', err);
+            this.snackBar.open('Échec de la mise à jour du membre', undefined, {
+              duration: 4000,
+            });
+          },
+        });
+      }
+    });
   }
 
   onDelete(membre: Member): void {
@@ -158,12 +181,12 @@ export class List implements OnInit{
       maxWidth: '750vw',
       maxHeight: '180vh',
       panelClass: 'custom-dialog-container',
+      autoFocus: true,
       data: { titre: 'Créer un nouveau membre' }
     });
 
     dialogRef.afterClosed().subscribe((result: Member | undefined) => {
       if (result) {
-        console.log('Membre créé:', result);
         this.memberService.createMember(result).subscribe({
           next: (createdMember) => {
             console.log('Membre sauvegardé:', createdMember);

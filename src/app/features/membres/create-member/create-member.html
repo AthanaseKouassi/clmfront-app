@@ -135,8 +135,12 @@
 </mat-dialog-content>
 
 <mat-dialog-actions align="end">
-  <button mat-raised-button (click)="close()">Fermer</button>
-  <button mat-raised-button color="primary"  (click)="save()" [disabled]="form.invalid">
+  <button mat-raised-button (click)="close()">
+    <mat-icon>close</mat-icon>
+    Fermer
+  </button>
+  <button mat-raised-button color="primary" (click)="save()"  [disabled]="form.invalid">
+    <mat-icon>save</mat-icon>
     Enregistrer
   </button>
 </mat-dialog-actions>
