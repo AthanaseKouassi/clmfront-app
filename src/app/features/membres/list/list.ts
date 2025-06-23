@@ -14,6 +14,7 @@ import {MatDialog} from '@angular/material/dialog';
 import {CreateMember} from '../create-member/create-member';
 import {MatSnackBar} from '@angular/material/snack-bar';
 import {Router} from '@angular/router';
+import {NotificationService} from '../../../core/notification/notification-service';
 
 
 @Component({
@@ -38,10 +39,11 @@ import {Router} from '@angular/router';
 })
 export class List implements OnInit{
   private memberService = inject(MemberService);
+  private notificationService = inject(NotificationService);
   readonly dialog = inject(MatDialog);
   private router = inject(Router);
-  protected searchForm: FormGroup ;
 
+  protected searchForm: FormGroup ;
 
   sQuery='';
   members: Member[] = [];
@@ -209,16 +211,19 @@ export class List implements OnInit{
         this.memberService.createMember(result).subscribe({
           next: (createdMember) => {
             console.log('Membre sauvegardé:', createdMember);
+            this.notificationService.info('Membre crée');
             // Mise à jour de la liste locale
             this.members.push(createdMember);
 
-            this.snackBar.open('Membre créé avec succès !', 'Fermer', {
-              duration: 3000,
-            });
+            // this.snackBar.open('Membre créé avec succès !', 'Fermer', {
+            //   duration: 3000,
+            // });
+
           },
           error: (err) => {
             console.error('Erreur lors de la création du membre', err);
-            this.snackBar.open('Échec de la création du membre', undefined, { duration: 4000 });
+            // this.snackBar.open('Échec de la création du membre', undefined, { duration: 4000 });
+            this.notificationService.error('Erreur de creation Membre');
           },
         });
 
