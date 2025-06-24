@@ -5,7 +5,13 @@ export const routes: Routes = [
   { path: '', component: Dashboard },
   {
     path: 'membres',
-    loadChildren: () => import('./features/membres/routes').then(m => m.membresRoutes)
+    loadChildren: () => import('./features/membres/routes')
+      .then(m => m.membresRoutes)
+  },
+  {
+    path: 'groupe',
+    loadChildren: () => import('./features/groupe/routes')
+      .then(g => g.groupesRoutes)
   },
   {path: '**', redirectTo: '/layout/dashboard', pathMatch: 'full'},
 
