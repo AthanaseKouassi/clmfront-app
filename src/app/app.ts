@@ -2,10 +2,11 @@ import {Component} from '@angular/core';
 import {RouterOutlet} from '@angular/router';
 import {MenuItem, Navbar} from './layout/navbar/navbar';
 import {CommonModule} from '@angular/common';
+import {NotificationComponent} from "./core/notification/notification.component";
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet, Navbar, CommonModule],
+  imports: [RouterOutlet, Navbar, CommonModule, NotificationComponent],
   standalone: true,
   templateUrl: './app.html',
   styleUrl: './app.scss'

@@ -7,15 +7,29 @@
   max-width: 400px;
 
   .notification {
+    opacity: 0.92; // entre 0.85 et 0.95 donne un bon compromis
+    transition: opacity 0.3s ease-in-out;
     margin: 5px;
     border-radius: 5px;
     color: #fff;
     overflow: hidden;
 
     .title {
+      display: flex;
+      justify-content: space-between;
       background: rgba(0, 0, 0, 0.6);
       padding-left: 10px;
       font-weight: bold;
+
+      .close-btn {
+        color: #fff; // ou #f1f1f1 pour contraste
+        opacity: 0.9;
+        transition: opacity 0.2s ease-in-out;
+
+        &:hover {
+          opacity: 1;
+        }
+      }
     }
 
     .message {
@@ -26,7 +40,8 @@
     }
 
     &.info {
-      background-color: rgba(189, 189, 189, 0.9);
+      //background-color: rgba(189, 189, 189, 0.9);
+      background-color: rgba(110, 140, 205, 0.84);
     }
 
     &.success {

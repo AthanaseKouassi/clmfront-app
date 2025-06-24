@@ -31,7 +31,8 @@ export class NotificationComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    this._subscription = this._notificationSvc.getObservable().subscribe(notification => this._addNotification(notification));
+    this._subscription = this._notificationSvc.getObservable().subscribe(
+      notification => this._addNotification(notification));
   }
 
   ngOnDestroy() {
@@ -39,7 +40,8 @@ export class NotificationComponent implements OnInit, OnDestroy {
   }
 
   close(notification: Notification) {
-    this.notifications = this.notifications.filter(notif => notif.id !== notification.id);
+    this.notifications = this.notifications.filter(
+      notif => notif.id !== notification.id);
   }
 
 

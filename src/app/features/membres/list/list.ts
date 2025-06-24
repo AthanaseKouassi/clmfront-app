@@ -159,6 +159,8 @@ export class List implements OnInit{
   onSearch(): void {
     this.sQuery = this.searchForm.get('searchQuery')?.value?.trim() || '';
     console.log('Search elements :', this.sQuery);
+
+    this.notificationService.error('Erreur','Membre succès ',5000);
     // Réinitialiser la pagination dans tous les cas
     this.resetPagination();
     if (this.hasValidSearchQuery()) {
@@ -211,7 +213,7 @@ export class List implements OnInit{
         this.memberService.createMember(result).subscribe({
           next: (createdMember) => {
             console.log('Membre sauvegardé:', createdMember);
-            this.notificationService.info('Membre crée');
+            this.notificationService.success('Success','Membre crée avec succès :(');
             // Mise à jour de la liste locale
             this.members.push(createdMember);
 
@@ -223,7 +225,7 @@ export class List implements OnInit{
           error: (err) => {
             console.error('Erreur lors de la création du membre', err);
             // this.snackBar.open('Échec de la création du membre', undefined, { duration: 4000 });
-            this.notificationService.error('Erreur de creation Membre');
+            this.notificationService.error('Erreur','Erreur de creation Membre');
           },
         });
 
