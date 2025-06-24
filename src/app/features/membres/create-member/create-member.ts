@@ -58,10 +58,7 @@ export class CreateMember implements OnInit{
               private fb: FormBuilder,
               private dialogRef: MatDialogRef<CreateMember>,
               @Inject(MAT_DIALOG_DATA) public data: { titre: string; membre?: Member }
-  ) {
-
-  }
-
+  ) {  }
 
   ngOnInit(): void {
     const membre = this.data.membre;
@@ -91,8 +88,6 @@ export class CreateMember implements OnInit{
       idResponsability: [membre?.idResponsability]
     });
   }
-
-
 
   save() {
     if (this.form.valid) {

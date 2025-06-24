@@ -99,7 +99,7 @@ export class NotificationService {
 //   showNotification(message: string, action: string = 'Close') {
 //     // Displaying the toast notification
 //     this.snackBar.open(message, action, {
-//       duration: 3000,  // Notification will disappear after 3 seconds
+//       duration: 3000,  // NotificationComponent will disappear after 3 seconds
 //       horizontalPosition: 'right',
 //       verticalPosition: 'top',
 //     });
