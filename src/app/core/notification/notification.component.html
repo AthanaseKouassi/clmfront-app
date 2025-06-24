@@ -1,0 +1,25 @@
+<div class="notifications">
+  @for (notification of notifications; track notification.id) {
+  <div class="notification" [ngClass]="className(notification)">
+    <ng-container *ngTemplateOutlet="notificationTpl;context:{notification:notification}"></ng-container>
+  </div>
+  }
+</div>
+
+<ng-template #notificationTpl let-notification="notification">
+
+  <div class="title" fxLayout="row" fxLayoutAlign="space-between center">
+    <div>{{notification.title}}</div>
+    <button mat-icon-button
+            class="close-btn"
+            (click)="close(notification)"
+            matTooltip="Close the notification"
+            matTooltipPosition="before">
+      <mat-icon>cancel</mat-icon>
+    </button>
+  </div>
+
+  <div class="message">{{notification.message}}</div>
+
+</ng-template>
+

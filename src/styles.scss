@@ -125,4 +125,24 @@ mat-toolbar {
 html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 
+.blue-snackbar {
+  background: $primary-color;
+}
+
+.info-snackbar{
+  background: $secondary-color;
+}
+
+.warn-snackbar{
+  background: darkorange;
+}
+
+.success-snackbar {
+  background: #107144;
+}
+
+.error-snackbar {
+  background: #e33333;
+}
+
 
