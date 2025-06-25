@@ -1,1 +1,50 @@
-<p>list works!</p>
+<mat-card class="dashboard-card mat-elevation-z2">
+  <mat-card-header>
+    <mat-card-title style="margin-bottom: 1rem" >Gestion des groupes d'activité</mat-card-title>
+  </mat-card-header>
+
+  <mat-card-content class="table-card mat-elevation-z3 ">
+    <form [formGroup]="sGroupForm">
+      <div class="toolbar-actions">
+        <button mat-raised-button color="primary" type="button" >
+          <mat-icon>person_add</mat-icon>
+          Créer un groupe
+        </button>
+        <mat-form-field appearance="outline" class="w-full max-w-md search-field">
+          <mat-label>Rechercher</mat-label>
+          <input
+            matInput
+            type="text"
+            placeholder="Rechercher..."
+            formControlName="searchInput"
+          />
+          <button
+            mat-icon-button
+            matSuffix
+            aria-label="Rechercher"
+          >
+            <mat-icon>search</mat-icon>
+          </button>
+        </mat-form-field>
+      </div>
+    </form>
+    <app-data-table
+      [columns]="columns"
+      [pageSize]="pageSize"
+      [totalItems]="totalItems"
+      [pageSizeOptions]="pageSizeOptions"
+    ></app-data-table>
+<!--    <app-data-table-->
+<!--      [dataSource]="members"-->
+<!--      [columns]="columns"-->
+<!--      [pageSize]="pageSize"-->
+<!--      [pageSizeOptions]="pageSizeOptions"-->
+<!--      [totalItems]="totalItems"-->
+<!--      (pageChange)="onPageChange($event)"-->
+<!--      (detail)="onDetailClick($event)"-->
+<!--      (edit)="onEdit($event)"-->
+<!--      (delete)="onDelete($event)">-->
+<!--    </app-data-table>-->
+  </mat-card-content>
+
+</mat-card>
