@@ -24,6 +24,10 @@ export class GroupeService {
     );
   }
 
+  getGrouprById(id: number): Observable<Group>{
+    return  this.http.get<Group>(`${this.apiUrl}/groups/${id}`);
+  }
+
 
 
 }
