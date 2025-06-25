@@ -36,3 +36,9 @@ export enum MaritalStatus {
   WIDOWED = 'Veuf/Veuve',
 }
 
+export interface MemberGroupResponsability {
+  id: number;
+  role: string;
+  memberId: number;
+  groupId: number;
+}
