@@ -29,10 +29,15 @@
       </div>
     </form>
     <app-data-table
+      [dataSource]="groups"
       [columns]="columns"
       [pageSize]="pageSize"
       [totalItems]="totalItems"
       [pageSizeOptions]="pageSizeOptions"
+      (pageChange)="onPageChange($event)"
+      (detail)="onDetailClick($event)"
+      (edit)="onEdit($event)"
+      (delete)="onDelete($event)"
     ></app-data-table>
 <!--    <app-data-table-->
 <!--      [dataSource]="members"-->

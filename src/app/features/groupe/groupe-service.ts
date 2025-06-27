@@ -1,8 +1,9 @@
 import {inject, Injectable} from '@angular/core';
-import {HttpClient} from '@angular/common/http';
+import {HttpClient, HttpParams} from '@angular/common/http';
 import {environment} from '../../environment/environment';
 import {Group} from '../models/groupe';
 import {catchError, Observable, throwError} from 'rxjs';
+import {Page, PaginationRequest} from '../models/page';
 
 
 @Injectable({
@@ -26,6 +27,18 @@ export class GroupeService {
 
   getGrouprById(id: number): Observable<Group>{
     return  this.http.get<Group>(`${this.apiUrl}/groups/${id}`);
+  }
+
+  getGroupByPage(pagination: PaginationRequest): Observable<Page<Group>> {
+    let params = new HttpParams()
+      .set('page', pagination.page)
+      .set('size', pagination.size);
+
+    if (pagination.sort) {
+      params = params.set('sort', pagination.sort);
+    }
+
+    return this.http.get<Page<Group>>(`${this.apiUrl}/groups`,{params});
   }
 
 

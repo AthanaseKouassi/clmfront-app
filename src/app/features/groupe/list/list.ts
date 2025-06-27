@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, inject, OnInit, ViewChild} from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {MatCard, MatCardContent, MatCardHeader, MatCardTitle} from '@angular/material/card';
 import {FormGroup, NonNullableFormBuilder, ReactiveFormsModule} from '@angular/forms';
@@ -6,7 +6,10 @@ import {MatButton, MatIconButton} from '@angular/material/button';
 import {MatIcon} from '@angular/material/icon';
 import {MatFormField, MatInput, MatLabel, MatSuffix} from '@angular/material/input';
 import {ColumnConfig, DataTable} from '../../../shared/ui/data-table/data-table';
-import {PageEvent} from '@angular/material/paginator';
+import {MatPaginator, PageEvent} from '@angular/material/paginator';
+import {Page, PaginationRequest} from '../../models/page';
+import {GroupeService} from '../groupe-service';
+import {Group} from '../../models/groupe';
 
 
 @Component({
@@ -33,12 +36,17 @@ import {PageEvent} from '@angular/material/paginator';
 })
 export class List implements OnInit {
 
+  private readonly groupService = inject(GroupeService);
   protected sGroupForm: FormGroup ;
+  @ViewChild(MatPaginator) paginator!: MatPaginator;
 
+  groups: Group[] = [];
   totalItems = 0;
   pageIndex = 0;
   pageSize = 5;
   pageSizeOptions = [5, 10, 15];
+  sort = 'name,asc';
+  query='';
 
   constructor(private fb: NonNullableFormBuilder) {
     this.sGroupForm = this.fb.group({
@@ -47,26 +55,43 @@ export class List implements OnInit {
 
 
   ngOnInit(): void {
-
+  this.loadGroups();
   }
 
   columns: ColumnConfig[] = [
     { key: 'name', header: 'Nom du groupe', type: 'text' },
-    { key: 'createAt', header: 'Date création', type: 'date',format: 'dd/MM/yyyy' }
-
+    { key: 'atCreate', header: 'Date création', type: 'date',format: 'dd/MM/yyyy' }
   ];
 
+
+  loadGroups(): void {
+    const request: PaginationRequest = {
+      page: this.pageIndex,
+      size: this.pageSize,
+      sort: this.sort,
+    };
+
+    this.groupService.getGroupByPage(request).subscribe({
+      next: (data: Page<Group>) => {
+        this.groups = data.content;
+        this.totalItems = data.totalElements;
+        this.pageIndex = data.number;
+        console.log('Les groups ... ',this.groups);
+      },
+      error: (err) => {
+        console.error('Erreur lors du chargement des groupes :', err);
+      }
+    });
+  }
+
   onPageChange(event: PageEvent): void {
-
+    console.log('Page changed:', event);
   }
 
-  onEdit(): void { }
+  onEdit(group: Group): void { }
 
-  onDetailClick(): void { }
+  onDetailClick(group: Group): void { }
 
-  onDelete(): void { }
+  onDelete(group: Group): void { }
 
-  onSubmit() {
-    console.log('la haut...');
-  }
 }

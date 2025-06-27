@@ -5,3 +5,9 @@ export interface Page<T> {
   size: number;
   number: number;
 }
+
+export interface PaginationRequest {
+  page: number;
+  size: number;
+  sort?: string; // optionnel
+}
