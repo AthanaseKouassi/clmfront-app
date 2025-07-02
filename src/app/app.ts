@@ -21,7 +21,7 @@ export class App {
     ]},
     {label: 'Activités', path: '', icon: 'volunteer_activism',
     children: [
-      {label: 'Créer un groupe', path: '', icon: 'groups'},
+      {label: 'Créer un groupe', path: '/groupe', icon: 'groups'},
       {label: 'Créer une Responsabilité', path: '', icon: 'attribution'},
       {label: 'Les Champs missionnaires', path: '', icon: 'diversity_3'}
     ]},

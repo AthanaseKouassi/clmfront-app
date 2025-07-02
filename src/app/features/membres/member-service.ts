@@ -26,7 +26,6 @@ export class MemberService {
   }
 
   createMember(member: Member): Observable<Member> {
-    console.log('LES Membres au niveau service...',member);
     return this.http.post<Member>(`${this.apiUrl}/members/create`, member).pipe(
       catchError(err => {
         // ↳ point centralisé pour journaliser/enrichir l’erreur
@@ -34,9 +33,6 @@ export class MemberService {
         return throwError(() => err);
       })
     );
-
-
-
   }
 
   getMemberSearch(query: string, page: number, size: number ):Observable<Page<Member>> {

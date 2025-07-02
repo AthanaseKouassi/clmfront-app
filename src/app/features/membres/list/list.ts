@@ -6,7 +6,7 @@ import {MatIcon} from '@angular/material/icon';
 import {MatFormField, MatInput, MatLabel, MatSuffix} from '@angular/material/input';
 import {MatButton, MatIconButton} from '@angular/material/button';
 
-import {FormBuilder, FormControl, FormGroup, ReactiveFormsModule} from '@angular/forms';
+import {FormBuilder, FormGroup, ReactiveFormsModule} from '@angular/forms';
 import {Member} from '../../models/members';
 import {MemberService} from '../member-service';
 import {Page} from '../../models/page';
@@ -60,10 +60,6 @@ export class List implements OnInit{
   }
 
   ngOnInit(): void {
-      this.searchForm = new FormGroup({
-        searchQuery: new FormControl('', { nonNullable: true }),
-      });
-
   this.loadMembers(this.pageIndex, this.pageSize);
   }
 
