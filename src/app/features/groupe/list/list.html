@@ -6,7 +6,7 @@
   <mat-card-content class="table-card mat-elevation-z3 ">
     <form [formGroup]="sGroupForm">
       <div class="toolbar-actions">
-        <button mat-raised-button color="primary" type="button" >
+        <button mat-raised-button color="primary" type="button" (click)="openDialog()">
           <mat-icon>person_add</mat-icon>
           Créer un groupe
         </button>

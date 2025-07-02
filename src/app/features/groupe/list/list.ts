@@ -10,6 +10,8 @@ import {MatPaginator, PageEvent} from '@angular/material/paginator';
 import {Page, PaginationRequest} from '../../models/page';
 import {GroupeService} from '../groupe-service';
 import {Group} from '../../models/groupe';
+import {MatDialog} from '@angular/material/dialog';
+import {CreateGroupe} from '../create-groupe/create-groupe';
 
 
 @Component({
@@ -38,6 +40,7 @@ export class List implements OnInit {
 
   private readonly groupService = inject(GroupeService);
   protected sGroupForm: FormGroup ;
+  readonly dialog = inject(MatDialog);
   @ViewChild(MatPaginator) paginator!: MatPaginator;
 
   groups: Group[] = [];
@@ -83,6 +86,35 @@ export class List implements OnInit {
       }
     });
   }
+
+  openDialog(): void {
+    const dialogRef = this.dialog.open(CreateGroupe, {
+      maxWidth: '750vw',
+      maxHeight: '180vh',
+      panelClass: 'custom-dialog-container',
+      autoFocus: true,
+      data: { titre: "Créer un nouveau groupe d'activité" }
+    });
+
+    dialogRef.afterClosed().subscribe((result: Group | undefined) => {
+      if (result) {
+        // this.memberService.createMember(result).subscribe({
+        //   next: (createdMember) => {
+        //     console.log('Membre sauvegardé:', createdMember);
+        //     this.notificationService.success('Creéation réussie','Membre crée avec succès!',5000);
+        //     // Mise à jour de la liste locale
+        //     this.members.push(createdMember);
+        //   },
+        //   error: (err) => {
+        //     console.error('Erreur lors de la création du membre', err);
+        //     this.notificationService.error('Erreur','Erreur de creation Membre');
+        //   },
+        // });
+
+      }
+    });
+  }
+
 
   onPageChange(event: PageEvent): void {
     console.log('Page changed:', event);
