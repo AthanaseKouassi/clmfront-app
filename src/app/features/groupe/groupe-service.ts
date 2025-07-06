@@ -42,5 +42,14 @@ export class GroupeService {
   }
 
 
+  editGroup(id: number, group: Group): Observable<Group> {
+    return this.http.put<Group>(`${this.apiUrl}/groups/${id}`,group).pipe(
+        catchError (err => {
+          console.error('[GroupeService] ::: editGroup error: ', err);
+          return throwError(() => err);
+        })
+    );
+  }
+
 
 }
