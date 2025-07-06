@@ -98,6 +98,15 @@ export class List implements OnInit {
 
     dialogRef.afterClosed().subscribe((result: Group | undefined) => {
       if (result) {
+        this.groupService.createGroupe(result).subscribe({
+          next: (createGroupe) => {
+            console.log('Groupe save ...',createGroupe);
+            this.groups.push(createGroupe);
+          },
+          error: (err) => {
+            console.error('Erreur lors de la création du groupe', err);
+          }
+        });
         // this.memberService.createMember(result).subscribe({
         //   next: (createdMember) => {
         //     console.log('Membre sauvegardé:', createdMember);

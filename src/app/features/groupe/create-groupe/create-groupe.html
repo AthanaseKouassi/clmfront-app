@@ -1,8 +1,43 @@
 <mat-dialog-content class="mat-typography">
-  <mat-card-header><h5>{{ data.titre || "Créer un groupe d''activité" }}</h5></mat-card-header>
+  <mat-card-header>
+    <mat-card-title>
+      <h5>{{ data.titre || "Créer un groupe d''activité" }}</h5>
+    </mat-card-title>
+  </mat-card-header>
 
-  <form  class="form-grid">
+  <form  class="form-grid" [formGroup]="form" >
+
+    <section class="card-wrapper">
+      <mat-card class="form-card">
+        <mat-form-field appearance="outline">
+          <mat-label>Nom</mat-label>
+          <input matInput formControlName="name" required>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>Date de création</mat-label>
+          <input matInput [matDatepicker]="groupDatePicker" formControlName="atCreate" required>
+          <mat-datepicker-toggle matIconSuffix [for]="groupDatePicker"></mat-datepicker-toggle>
+          <mat-datepicker #groupDatePicker></mat-datepicker>
+        </mat-form-field>
+
+
+      </mat-card>
+
+
+    </section>
 
 
   </form>
 </mat-dialog-content>
+
+<mat-dialog-actions align="end">
+  <button mat-raised-button (click)="close()">
+    <mat-icon>close</mat-icon>
+    Fermer
+  </button>
+  <button mat-raised-button color="primary" (click)="save()"  [disabled]="form.invalid">
+    <mat-icon>save</mat-icon>
+    Enregistrer
+  </button>
+</mat-dialog-actions>
