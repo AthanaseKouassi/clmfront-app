@@ -12,6 +12,7 @@ import {GroupeService} from '../groupe-service';
 import {Group} from '../../models/groupe';
 import {MatDialog} from '@angular/material/dialog';
 import {CreateGroupe} from '../create-groupe/create-groupe';
+import {NotificationService} from "../../../core/notification/notification-service";
 
 
 @Component({
@@ -39,6 +40,7 @@ import {CreateGroupe} from '../create-groupe/create-groupe';
 export class List implements OnInit {
 
   private readonly groupService = inject(GroupeService);
+  private readonly notificationService = inject(NotificationService);
   protected sGroupForm: FormGroup ;
   readonly dialog = inject(MatDialog);
   @ViewChild(MatPaginator) paginator!: MatPaginator;
@@ -102,11 +104,14 @@ export class List implements OnInit {
           next: (createGroupe) => {
             console.log('Groupe save ...',createGroupe);
             this.groups.push(createGroupe);
+            this.notificationService.success('Création réussie','Groupe créé avec succès!',5000);
           },
           error: (err) => {
             console.error('Erreur lors de la création du groupe', err);
+            this.notificationService.error('Erreur','Erreur de creation Groupe');
           }
         });
+
         // this.memberService.createMember(result).subscribe({
         //   next: (createdMember) => {
         //     console.log('Membre sauvegardé:', createdMember);
