@@ -1,1 +1,41 @@
-<p>details works!</p>
+<mat-card class="detail-card mat-elevation-z2 bg-white">
+  <mat-card-header>
+    <mat-card-title>
+      <h5>Détails Groupe</h5>
+    </mat-card-title>
+  </mat-card-header>
+
+  <mat-card-content>
+    @if ( groupe$ | async; as groupe) {
+      <div class="detail-grid">
+        <div class="detail-item">
+          <strong>Nom :</strong> {{ groupe.name }}
+        </div>
+        <div class="detail-item">
+          <strong>Date de création :</strong> {{ groupe.atCreate }}
+        </div>
+      </div>
+    } @else {
+      @if (error) {
+        <div class="error">Erreur de chargement du groupe</div>
+      } @else {
+        <div>Chargement...</div>
+      }
+    }
+  </mat-card-content>
+
+  <mat-card-actions class="d-flex justify-content-end" style="gap: 10px">
+    @if (groupe$ | async; as groupe) {
+      <button matButton="elevated" color="accent"  class="d-md-flex" >
+        <mat-icon>edit</mat-icon>
+        Modifier
+      </button>
+    }
+    <button matButton="elevated" color="primary" (click)="exitDetail()" type="button">
+      <mat-icon>reply</mat-icon>
+      Retour
+    </button>
+
+  </mat-card-actions>
+
+</mat-card>

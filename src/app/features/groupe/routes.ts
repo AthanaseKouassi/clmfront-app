@@ -1,7 +1,9 @@
 import {Routes} from '@angular/router';
 import {List} from './list/list';
+import {Details} from './details/details';
 
 
 export const groupesRoutes: Routes = [
-  { path: '', component: List }
+  { path: '', component: List },
+  { path: 'details/:id', component: Details }
 ];
